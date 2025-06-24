@@ -1,0 +1,71 @@
+:root {
+    --color-title: Maroon
+}
+
+html {
+    font-family: Helvetica, sans-serif;
+    font-size: 12pt;
+}
+
+h1, h2, h3 {
+    color: var(--color-title) !important;
+}
+
+strong {
+    color: var(--color-title) !important;
+}
+
+.reset {
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+
+.logo-container {
+    display: flex;
+    height: 10%;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.testatina {
+    font-weight: bold;
+}
+
+.uni-logo {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100px;
+    height: auto;
+    padding: 1rem 0;
+}
+
+#logo {
+    width: 400px;
+    height: auto;
+    margin: 0 auto;
+}
+
+#prodotti-carousel {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    height: 100%;
+
+    li {
+        display: flex;
+        width: 25%;
+        height: 100%;
+        flex-direction: column;
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+
+        li:nth-child(even) {
+            justify-content: end;
+        }
+    }
+}
