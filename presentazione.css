@@ -20,6 +20,15 @@ li::marker {
     color: var(--color-title);
 }
 
+code {
+    color: #777 !important;
+    background-color: #fff !important;
+}
+
+.dataframe {
+    font-size: x-small !important;
+}
+
 .reset {
     margin: 0 !important;
     padding: 0 !important;
@@ -118,7 +127,8 @@ li::marker {
     }
 }
 
-#img-gform {
+#img-gform,
+#img-modello {
     display: block;
     margin: 0 auto;
     height:55vh;
