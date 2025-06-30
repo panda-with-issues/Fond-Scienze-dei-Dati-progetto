@@ -2,10 +2,10 @@
     --color-title: Maroon
 }
 
-/* html {
+/*html {
     font-family: Helvetica, sans-serif;
-    font-size: 12pt;
-} */
+    font-size: 12pt !important;
+}*/
 
 h1, h2, h3 {
     color: var(--color-title) !important;
@@ -133,4 +133,11 @@ code {
     margin: 0 auto;
     height:55vh;
     width: auto;
+}
+
+.celltag_relplot img {
+    display: block;
+    height: 75vh;
+    width: auto;
+    margin: 0 auto;
 }
