@@ -1,0 +1,28 @@
+.section-login{
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  min-height: 60vh;
+  justify-content: center;
+  align-items: center;
+  
+  #login-form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  label {
+    color: var(--color-title);
+    font-weight: bold;
+  }
+
+  input {
+    margin: .5em 0 1.5em;
+    padding: .15em .3em;
+  }
+
+  .error {
+    color: red;
+    font-weight: bold;
+  }
+}
