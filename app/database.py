@@ -61,11 +61,11 @@ class Corrispettivi(db.Model):
   data: Mapped[datetime.date]
   mercato: Mapped[str]
   giorno_mercato: Mapped[Giorno]
-  reparto1: Mapped[Optional[float]]
-  reparto2: Mapped[Optional[float]]
-  reparto3: Mapped[Optional[float]]
-  reparto4: Mapped[Optional[float]]
-  reparto5: Mapped[Optional[float]]
+  reparto1: Mapped[float]
+  reparto2: Mapped[float]
+  reparto3: Mapped[float]
+  reparto4: Mapped[float]
+  reparto5: Mapped[float]
 
   __table_args__ =(
     ForeignKeyConstraint(
@@ -77,6 +77,26 @@ class Corrispettivi(db.Model):
     CheckConstraint(
       'data <= ts',
       name="data_futura_check"
+    ),
+    CheckConstraint(
+      'reparto1 >= 0',
+      name='reparto1_non_negativo_check'
+    ),
+    CheckConstraint(
+      'reparto2 >= 0',
+      name='reparto2_non_negativo_check'
+    ),
+    CheckConstraint(
+      'reparto3 >= 0',
+      name='reparto3_non_negativo_check'
+    ),
+    CheckConstraint(
+      'reparto4 >= 0',
+      name='reparto4_non_negativo_check'
+    ),
+    CheckConstraint(
+      'reparto5 >= 0',
+      name='reparto5_non_negativo_check'
     )
   )
 
@@ -136,10 +156,28 @@ def init_db(app):
         is_attuale=True
       ),
       Mercati(
+        nome='Centro',
+        giorno='Lunedì',
+        is_evento=False,
+        is_attuale=True
+      ),
+      Mercati(
+        nome='Passons',
+        giorno='Martedì',
+        is_evento=False,
+        is_attuale=True
+      ),
+      Mercati(
         nome='Centro_old',
         giorno='Martedì',
         is_evento=False,
         is_attuale=False
+      ),
+      Mercati(
+        nome='Friuli DOC',
+        giorno='Domenica',
+        is_evento=True,
+        is_attuale=None
       )
     ])
     db.session.commit()
