@@ -56,10 +56,10 @@ class Mercati(db.Model):
 class Corrispettivi(db.Model):
   __tablename__ = 'Corrispettivi'
 
-  ts: Mapped[datetime.datetime] = mapped_column(primary_key=True)
+  data: Mapped[datetime.date] = mapped_column(primary_key=True)
+  mercato: Mapped[str] = mapped_column(primary_key=True)
+  ts: Mapped[datetime.datetime] 
   inserito_da: Mapped[str]
-  data: Mapped[datetime.date]
-  mercato: Mapped[str]
   giorno_mercato: Mapped[Giorno]
   cassa: Mapped[str]
   reparto1: Mapped[float]
