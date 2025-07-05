@@ -31,6 +31,10 @@ a {
   font-size: 1.6rem;
 }
 
+.text-medium {
+  font-size: 1.4rem;
+}
+
 .global-logout {
   padding: 1em;
   text-align: right;

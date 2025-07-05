@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %} Console {% endblock %}
+
+{% block style %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
+{% endblock %}
+
+{% block content %}
+  <nav class="console text-medium">
+    <ul>
+      <li><a class="global-btn" href="{{ url_for('corr.inserisci')}}">Inserisci corrispettivi</a></li>
+      <li><a class="global-btn" href="#">Gestisci mercati</a></li>
+    </ul>
+  </nav>
+{% endblock %}
