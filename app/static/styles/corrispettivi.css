@@ -1,0 +1,43 @@
+.corrispettivi-inserisci {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  fieldset {
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 1em;
+    margin-bottom: 2em;
+  }
+
+  legend {
+    font-weight: bold;
+    color: var(--color-title)
+  }
+
+  .reparti {
+    display: flex;
+    flex-direction: column;
+    
+    label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: .5em 0;
+    }
+  }
+
+  label {
+    margin-right: 1.5em;
+  }
+
+  input,
+  select {
+    padding: .25em .5em;
+  }
+
+  input[type=number] {
+    width: 7em;
+    margin-left: 1em;
+  }
+}

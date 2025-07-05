@@ -27,6 +27,11 @@ a {
   }
 }
 
+input,
+select {
+  font-size: 1rem;
+}
+
 .text-big {
   font-size: 1.6rem;
 }
