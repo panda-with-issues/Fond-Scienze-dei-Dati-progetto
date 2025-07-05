@@ -61,6 +61,7 @@ class Corrispettivi(db.Model):
   data: Mapped[datetime.date]
   mercato: Mapped[str]
   giorno_mercato: Mapped[Giorno]
+  cassa: Mapped[str]
   reparto1: Mapped[float]
   reparto2: Mapped[float]
   reparto3: Mapped[float]
@@ -76,6 +77,10 @@ class Corrispettivi(db.Model):
     ),
     CheckConstraint(
       'data <= ts',
+      name="data_futura_check"
+    ),
+    CheckConstraint(
+      'cassa LIKE "Cassa ?"',
       name="data_futura_check"
     ),
     CheckConstraint(
