@@ -1,17 +1,12 @@
 import os
 from flask import Flask
 
-from . import database
+from . import database, auth
 
 def create_app():
   # create and configure the app
   app = Flask(__name__, instance_relative_config=True)
-  app.config.from_mapping(
-    SECRET_KEY='dev',
-    SQLALCHEMY_ECHO=True,
-    SQLALCHEMY_DATABASE_URI='sqlite:///app.sqlite'
-  )
-
+  
   app.config.from_pyfile('config.py', silent=True)
 
   # ensure the instance folder exists
@@ -26,5 +21,7 @@ def create_app():
   @app.route('/hello')
   def hello():
     return 'Hello, World!'
+  
+  app.register_blueprint(auth.bp)
   
   return app
