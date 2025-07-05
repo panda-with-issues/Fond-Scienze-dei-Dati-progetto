@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Errore{% endblock %}
+
+{% block style %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/error.css') }}">
+{% endblock %}
+
+{% block content %}
+  <article class="error">
+    <h2>Permesso negato</h2>
+    <p>Solo gli admin possono accedere a questa sezione. Torna <a onclick="window.history.back()">indietro</a></p>
+  </article>
+{% endblock %}

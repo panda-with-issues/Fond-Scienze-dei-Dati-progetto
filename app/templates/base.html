@@ -17,6 +17,13 @@
 </head>
 
 <body>
+  {% if g.user %}
+    <nav class="global-logout">
+      <span>{{ g.user.username }}</span>
+      <a href="{{ url_for('auth.logout') }}" class="global-btn">Logout</a>
+    </nav>
+  {% endif %}
+  
   <header class="global-header">
     <img src="{{ url_for('static', filename='logo.png')}}" alt="Logo Là di Cjastelan">
   </header>

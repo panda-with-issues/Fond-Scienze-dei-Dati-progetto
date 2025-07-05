@@ -1,5 +1,7 @@
 :root {
   --color-title: Maroon;
+  --color-bg: #ffe6e6;
+  --margin-left: 10vw;
 }
 
 * {
@@ -11,8 +13,32 @@ html {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+h2 {
+  color: var(--color-title);
+  font-size: 1.6rem;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-title);
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .text-big {
   font-size: 1.6rem;
+}
+
+.global-logout {
+  padding: 1em;
+  text-align: right;
+  background-color: var(--color-bg);
+
+  span {
+    margin-right: 1.5em;
+  }
 }
 
 .global-header {
@@ -29,6 +55,7 @@ html {
   color: #fff;
   border: none;
   border-radius: 25px;
+  padding: .3em 1em;
 
   &:hover {
     cursor: pointer;

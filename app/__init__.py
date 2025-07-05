@@ -1,7 +1,7 @@
 import os
-from flask import Flask
-
-from . import database, auth
+from flask import Flask, render_template, request
+from app.auth import login_required, admin_required
+from . import database, auth, corr
 
 def create_app():
   # create and configure the app
@@ -17,11 +17,17 @@ def create_app():
 
   db = database.init_db(app)
 
-  # a simple page that says hello
-  @app.route('/hello')
-  def hello():
-    return 'Hello, World!'
-  
   app.register_blueprint(auth.bp)
+  app.register_blueprint(corr.bp)
+  
+  @app.route('/')
+  @login_required
+  @admin_required
+  def index():
+    return render_template('index.html')
+
+  @app.errorhandler(403)
+  def forbidden(e):
+    return render_template('error.html', url=request.referrer), 403
   
   return app

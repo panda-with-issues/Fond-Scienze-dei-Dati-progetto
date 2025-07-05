@@ -1,0 +1,7 @@
+.error {
+  margin-left: var(--margin-left);
+
+  p {
+    margin-top: 2em;
+  }
+}
