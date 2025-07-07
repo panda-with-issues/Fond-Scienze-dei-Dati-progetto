@@ -70,3 +70,8 @@ select {
     cursor: pointer;
   }
 }
+
+.global-error {
+    color: red;
+    font-weight: bold;
+  }

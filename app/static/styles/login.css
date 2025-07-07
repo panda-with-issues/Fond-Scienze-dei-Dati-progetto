@@ -20,9 +20,4 @@
     margin: .5em 0 1.5em;
     padding: .15em .3em;
   }
-
-  .error {
-    color: red;
-    font-weight: bold;
-  }
 }
