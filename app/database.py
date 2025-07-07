@@ -1,8 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-from sqlalchemy import CheckConstraint, ForeignKeyConstraint, DDL, event, ForeignKey
+from sqlalchemy import CheckConstraint, ForeignKeyConstraint, DDL, event, ForeignKey, Numeric
 from typing import Literal, Optional
 import datetime
+from decimal import Decimal
 import sqlite3
 from flask import g
 
@@ -62,11 +63,11 @@ class Corrispettivi(db.Model):
   inserito_da: Mapped[str]
   giorno_mercato: Mapped[Giorno]
   cassa: Mapped[str]
-  reparto1: Mapped[float]
-  reparto2: Mapped[float]
-  reparto3: Mapped[float]
-  reparto4: Mapped[float]
-  reparto5: Mapped[float]
+  reparto1: Mapped[Decimal] = mapped_column(Numeric(10, 2))
+  reparto2: Mapped[Decimal] = mapped_column(Numeric(10, 2))
+  reparto3: Mapped[Decimal] = mapped_column(Numeric(10, 2))
+  reparto4: Mapped[Decimal] = mapped_column(Numeric(10, 2))
+  reparto5: Mapped[Decimal] = mapped_column(Numeric(10, 2))
 
   __table_args__ =(
     ForeignKeyConstraint(
@@ -81,7 +82,7 @@ class Corrispettivi(db.Model):
     ),
     CheckConstraint(
       'cassa LIKE "Cassa ?"',
-      name="data_futura_check"
+      name="cassa_check"
     ),
     CheckConstraint(
       'reparto1 >= 0',
