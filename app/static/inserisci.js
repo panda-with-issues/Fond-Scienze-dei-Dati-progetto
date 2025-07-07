@@ -29,8 +29,7 @@ function sort_giorni (e) {
     top.push(removed)
   })
 
-  const hr = document.createElement("option")
-  hr.innerHTML = "---------"
+  const hr = document.createElement("hr")
   
   giornoInput.replaceChildren(...top, hr, ...children)
   giornoInput.firstChild.setAttribute('selected', true)
