@@ -4,5 +4,5 @@ Untitled*
 imgs/presentazione/resources
 *.R
 
-instance
+instance/*sqlite
 app/__pycache__
