@@ -40,6 +40,20 @@ select {
   font-size: 1.4rem;
 }
 
+.bold {
+  font-weight: bold;
+  color: var(--color-title)
+}
+
+.hidden {
+  opacity: 0;
+  transition: opacity 1.8s ease-in;
+}
+
+.visible {
+  opacity: 1;
+}
+
 .global-logout {
   padding: 1em;
   text-align: right;

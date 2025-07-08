@@ -3,12 +3,37 @@
 const mercatoInput = document.querySelector('select[name="mercato"]')
 const giornoInput = document.querySelector('select[name="giorno_mercato"]')
 const defaultChildren = Array.from(giornoInput.children)
+const confirmationArticle = document.querySelector('.confirmation')
 
+if (confirmationArticle) {
+  setTimeout(() => {
+    confirmationArticle.classList.add('confirmation-active')
+    const descendants = confirmationArticle.querySelectorAll('*')
+    for (const el of descendants) {
+      if (el.classList.contains('hidden')) {
+        el.classList.add('visible')
+      }
+    }
+  }, 100);
+}
 
 mercatoInput.addEventListener('change', sort_giorni)
 mercatoInput.addEventListener('change', removeBlank, {once: true})
 
+if (session?.mercato) {
+  mercatoInput.dispatchEvent(new Event('change'))
+  mercatoInput.firstChild.selected = false
+  for (const opt of giornoInput.children) {
+    if (opt.value === session.giorno_mercato) {
+      opt.selected = true
+    }
+  };
+}
+
 function sort_giorni (e) {
+  defaultChildren.forEach(opt => {
+    opt.selected = false
+  })
   giornoInput.replaceChildren(...defaultChildren)
 
   const mercato = e.target.value
@@ -32,11 +57,11 @@ function sort_giorni (e) {
   const hr = document.createElement("hr")
   
   giornoInput.replaceChildren(...top, hr, ...children)
-  giornoInput.firstChild.setAttribute('selected', true)
+  giornoInput.firstChild.selected = true
 }
 
 function removeBlank (e) {
-  Array.from(e.target.children).forEach(child =>{
+  Array.from(e.target.children).forEach(child => {
     if (child.value === '') {
       e.target.removeChild(child)
     }

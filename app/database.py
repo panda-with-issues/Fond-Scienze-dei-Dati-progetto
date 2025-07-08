@@ -81,7 +81,7 @@ class Corrispettivi(db.Model):
       name="data_futura_check"
     ),
     CheckConstraint(
-      'cassa LIKE "Cassa ?"',
+      'cassa GLOB "Cassa [1-9]"',
       name="cassa_check"
     ),
     CheckConstraint(

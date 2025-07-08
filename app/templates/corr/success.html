@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Corrispettivi{% endblock %}
+
+{% block style %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/corrispettivi.css') }}">
+{% endblock %}
+
+{% block content %}
+  <section class="corrispettivi-success">
+    <p class="text-big">Il corrispettivo è stato inserito con successo!</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Data</th>
+          <th scope="col">Mercato</th>
+          <th scope="col">Giorno del mercato</th>
+          <th scope="col">Inserito il</th>
+          <th scope="col">Inserito da</th>
+          <th scope="col">Cassa</th>
+          <th scope="col">Reparto 1</th>
+          <th scope="col">Reparto 2</th>
+          <th scope="col">Reparto 3</th>
+          <th scope="col">Reparto 4</th>
+          <th scope="col">Reparto 5</th>
+        </tr>
+      </thead>
+      <tbody>
+        <td>{{ inserted['data'] }}</td>
+        <td>{{ inserted['mercato'] }}</td>
+        <td>{{ inserted['giorno_mercato'] }}</td>
+        <td>{{ inserted['ts'] }}</td>
+        <td>{{ inserted['inserito_da'] }}</td>
+        <td>{{ inserted['cassa'] }}</td>
+        <td>{{ inserted['reparto1'] }}</td>
+        <td>{{ inserted['reparto2'] }}</td>
+        <td>{{ inserted['reparto3'] }}</td>
+        <td>{{ inserted['reparto4'] }}</td>
+        <td>{{ inserted['reparto5'] }}</td>
+      </tbody>
+    </table>
+
+    <div class="btn-wrapper text-medium">
+      <a href="/corr/inserisci" class="global-btn success-btn">Nuovo</a>
+      <a href="/auth/logout" class="global-btn success-btn">Esci</a>
+    </div>
+  </section>
+{% endblock %}

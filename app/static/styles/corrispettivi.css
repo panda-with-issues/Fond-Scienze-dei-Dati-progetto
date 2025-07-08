@@ -40,4 +40,85 @@
     width: 7em;
     margin-left: 1em;
   }
+
+  span {
+    margin-bottom: 1.5em;
+  }
 }
+
+.confirmation {
+  position: absolute;
+  top: 10vh;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background-color: #fff;
+  border: 2px solid var(--color-title);
+  border-radius: 25px;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  transition-property: width, height, left;
+  transition-duration: 1s;
+
+  .attenzione {
+    width: 100px;
+    height: auto;
+  }
+
+  .inserisci-btn {
+    background-color: #fff;
+    color: var(--color-title);
+    border: 2px solid var(--color-title);
+  }
+}
+
+.confirmation-active {
+  left: 20vw;
+  width: 60vw;
+  height: 80vh;
+}
+
+.corrispettivi-success {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  min-height: 40vh;
+
+  table {
+    padding: .5em 0;
+    border-top: 2px solid var(--color-title);
+    border-bottom: 2px solid var(--color-title);
+    
+  }
+
+  th {
+    padding: .5em 1em;
+    font-weight: bold;
+    color: var(--color-title);
+    text-align: left;
+    border-bottom: 1px solid var(--color-title);
+  }
+
+  td {
+    padding: .5em 1em;
+  }
+
+  td:nth-last-child(-n+5) {
+    text-align: right;
+  }
+
+  .btn-wrapper {
+    min-width: 20vw;
+  }
+}
+
+.btn-wrapper {
+    min-width: 33%;
+    display: flex;
+    justify-content: space-between;
+  }

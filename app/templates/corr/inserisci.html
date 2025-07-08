@@ -11,38 +11,54 @@
 {% endblock %}
 
 {% block content %}
-  <script> const mercati = {{ mercati|tojson }}</script>
+  <script>
+    const mercati = {{ mercati|tojson }}
+    const session = {{ session|tojson }}
+    const confirmation = {{ confirmation|tojson }}
+
+    console.log(confirmation)
+  </script>
 
   <section>
     <form class="corrispettivi-inserisci" method="POST">
       <fieldset>
         <legend>Mercato</legend>
 
-        <label>Data <input type="date" name="data" max="{{ today }}" value="{{ request.form['data'] }}"required></label>
+        <label>Data <input type="date" name="data" max="{{ today }}" value="{{ session['data'] }}"required></label>
 
         <label>Mercato
-          <select name="mercato" value="{{ request.form['mercato'] }}" required>
-            <option></option>
+          <select name="mercato" required>
+            {% if not session['mercato'] %}
+              <option selected></option>
+            {% endif %}
             {% for mercato in mercati_nomi %}
-              <option>{{ mercato }}</option>
+              <option 
+              {% if mercato == session['mercato'] %}
+                selected
+              {% endif %}
+              >
+                {{ mercato }}
+              </option>
             {% endfor %}
           </select>
         </label>
 
         <label>Giorno
-          <select name="giorno_mercato" value="{{ request.form['giorno_mercato'] }}" required>
-            <option>Lunedì</option>
-            <option>Martedì</option>
-            <option>Mercoledì</option>
-            <option>Giovedì</option>
-            <option>Venerdì</option>
-            <option>Sabato</option>
-            <option>Domenica</option>
+          <select name="giorno_mercato" required>
+            {% for giorno in [ 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato', 'Domenica' ]%}
+              <option
+              {% if giorno == session['giorno_mercato'] %}
+                selected
+              {% endif %}
+              >
+                {{ giorno }}
+              </option>
+            {% endfor %}
           </select>
         </label>
 
         <label>Cassa
-          <select name="cassa" value="{{ request.form['cassa'] }}"required>
+          <select name="cassa" value="{{ session['cassa'] }}"required>
             <option>Cassa 1</option>
             <option>Cassa 2</option>
             <option>Cassa 3</option>
@@ -53,14 +69,41 @@
       <fieldset class="reparti">
         <legend>Corrispettivo</legend>
 
-        <label>Reparto 1 <input type="number" min="0" step="0.01" name="reparto1" value="{{ request.form['reparto1'] }}"></label>
-        <label>Reparto 2 <input type="number" min="0" step="0.01" name="reparto2" value="{{ request.form['reparto2'] }}"></label>
-        <label>Reparto 3 <input type="number" min="0" step="0.01" name="reparto3" value="{{ request.form['reparto3'] }}"></label>
-        <label>Reparto 4 <input type="number" min="0" step="0.01" name="reparto4" value="{{ request.form['reparto4'] }}"></label>
-        <label>Reparto 5 <input type="number" min="0" step="0.01" name="reparto5" value="{{ request.form['reparto5'] }}"></label>
-        <label>Totale <input type="number" step="0.01" name="totale" value="{{ request.form['totale'] }}" required></label>
+        <label>Reparto 1 <input type="number" min="0" step="0.01" name="reparto1" value="{{ session['reparto1'] }}"></label>
+        <label>Reparto 2 <input type="number" min="0" step="0.01" name="reparto2" value="{{ session['reparto2'] }}"></label>
+        <label>Reparto 3 <input type="number" min="0" step="0.01" name="reparto3" value="{{ session['reparto3'] }}"></label>
+        <label>Reparto 4 <input type="number" min="0" step="0.01" name="reparto4" value="{{ session['reparto4'] }}"></label>
+        <label>Reparto 5 <input type="number" min="0" step="0.01" name="reparto5" value="{{ session['reparto5'] }}"></label>
+        <label>Totale <input type="number" min="0" step="0.01" name="totale" value="{{ session['totale'] }}" required></label>
       </fieldset>
+
+      {% for message in get_flashed_messages() %}
+        <span class="global-error text-medium">{{ message }}</span>
+      {% endfor %}
+
       <button class="global-btn text-medium" type="submit">Inserisci</button>
     </form>
+
+    {% if confirmation %}
+      <article class="confirmation text-medium">
+        <img class="attenzione hidden" src="{{url_for('static', filename='attenzione.png')}}" alt="Attenzione!">
+
+        {% if giorno_sballato %}
+          <p class="hidden">Il mercato <span class="bold">{{ corrispettivo.mercato }}</span> normalmente non si tiene
+          di <span class="bold">{{ corrispettivo.giorno_mercato }}.</span></p>
+        {% endif %}
+
+        {% if cassa_sballata %}
+          <p class="hidden"><span class="bold">{{ corrispettivo.cassa }}</span> è un valore anomalo per la cassa.</p>
+        {% endif %}
+
+        <p class="hidden">Sei sicuro di voler continuare? L'operazione <span class="bold">non potrà essere annullata</span>.</p>
+
+        <div class="btn-wrapper">
+          <a href="/corr/inserisci" class="global-btn hidden">Correggi</a>
+          <a href="/corr/inserisci/insert" class="global-btn inserisci-btn hidden">Inserisci</a>
+        </div>
+      </article>
+    {% endif %}
   </section>
 {% endblock %}
