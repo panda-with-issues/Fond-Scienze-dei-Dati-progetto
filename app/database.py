@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-from sqlalchemy import CheckConstraint, ForeignKeyConstraint, DDL, event, ForeignKey, Numeric
+from sqlalchemy import CheckConstraint, ForeignKeyConstraint, event, Numeric
 from typing import Literal, Optional
 import datetime
 from decimal import Decimal
@@ -105,24 +105,6 @@ class Corrispettivi(db.Model):
       name='reparto5_non_negativo_check'
     )
   )
-
-mercato_attuale_trigger = DDL("""
-CREATE TRIGGER IF NOT EXISTS mercato_attuale_trigger
-BEFORE INSERT ON corrispettivi
-FOR EACH ROW
-WHEN NOT EXISTS (
-  SELECT * FROM mercati
-  WHERE mercati.nome = NEW.mercato
-    AND mercati.giorno = NEW.giorno_mercato
-    AND mercati.is_evento = 0
-    AND mercati.is_attuale = 1
-)
-BEGIN
-  SELECT RAISE(FAIL, 'Il mercato referenziato non è attuale');
-END;
-""")
-
-event.listen(Corrispettivi.__table__, 'after_create', mercato_attuale_trigger)
 
 def init_db(app):
   db.init_app(app)

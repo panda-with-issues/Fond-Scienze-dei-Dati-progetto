@@ -88,11 +88,6 @@
       <article class="confirmation text-medium">
         <img class="attenzione hidden" src="{{url_for('static', filename='attenzione.png')}}" alt="Attenzione!">
 
-        {% if giorno_sballato %}
-          <p class="hidden">Il mercato <span class="bold">{{ corrispettivo.mercato }}</span> normalmente non si tiene
-          di <span class="bold">{{ corrispettivo.giorno_mercato }}.</span></p>
-        {% endif %}
-
         {% if cassa_sballata %}
           <p class="hidden"><span class="bold">{{ corrispettivo.cassa }}</span> è un valore anomalo per la cassa.</p>
         {% endif %}

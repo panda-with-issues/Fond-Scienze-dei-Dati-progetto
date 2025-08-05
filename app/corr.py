@@ -36,24 +36,16 @@ def inserisci():
       error = f'Il {corrispettivo.data} non era {corrispettivo.giorno_mercato.lower()}'
 
     if error is None:
-      giorno_sballato = False
       cassa_sballata = False
-      
-      # controlliamo la corrispondenza mercato-giorno_mercato
-      giorni_safe = [ mercato.giorno for mercato in mercati if mercato.nome == corrispettivo.mercato ]
-      if corrispettivo.giorno_mercato not in giorni_safe:
-        giorno_sballato = True
 
       # alert se cassa > 3
       if corrispettivo.cassa not in [ f'Cassa {i}' for i in range(1, 4) ]:
         cassa_sballata = True
-      
-      if giorno_sballato or cassa_sballata:
         to_insert = { column.key: getattr(corrispettivo, column.key) for column in corrispettivo.__mapper__.columns }
         session['to_insert'] = to_insert
         return render_template('corr/inserisci.html',
                                confirmation=True, corrispettivo=corrispettivo,
-                               giorno_sballato=giorno_sballato, cassa_sballata=cassa_sballata,
+                               cassa_sballata=cassa_sballata,
                                mercati=mercati_dict, mercati_nomi=mercati_nomi)
       
       try:
