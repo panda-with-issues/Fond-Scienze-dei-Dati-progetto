@@ -9,8 +9,8 @@
 {% block content %}
   <nav class="console text-medium">
     <ul>
-      <li><a class="global-btn" href="{{ url_for('corr.inserisci')}}">Inserisci corrispettivi</a></li>
-      <li><a class="global-btn" href="#">Gestisci mercati</a></li>
+      <li><a class="global-btn" href="{{ url_for('corr.inserisci') }}">Inserisci corrispettivi</a></li>
+      <li><a class="global-btn" href="{{ url_for('mercati.visualizza') }}">Gestisci mercati</a></li>
     </ul>
   </nav>
 {% endblock %}

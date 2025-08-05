@@ -13,6 +13,12 @@ html {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+h1 {
+  color: var(--color-title);
+  font-size: 2rem;
+  font-weight: bold;
+}
+
 h2 {
   color: var(--color-title);
   font-size: 1.6rem;
@@ -30,6 +36,24 @@ a {
 input,
 select {
   font-size: 1rem;
+}
+
+table {
+  padding: .5em 0;
+  border-top: 2px solid var(--color-title);
+  border-bottom: 2px solid var(--color-title);
+}
+
+th {
+  padding: .5em 1em;
+  font-weight: bold;
+  color: var(--color-title);
+  text-align: left;
+  border-bottom: 1px solid var(--color-title);
+}
+
+td {
+  padding: .5em 1em;
 }
 
 .text-big {
@@ -86,6 +110,10 @@ select {
 }
 
 .global-error {
-    color: red;
-    font-weight: bold;
-  }
+  color: red;
+  font-weight: bold;
+}
+
+.pointer:hover {
+  cursor: pointer;
+}

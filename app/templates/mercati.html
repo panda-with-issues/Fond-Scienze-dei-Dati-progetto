@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}Mercati{% endblock %}
+
+{% block style %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/mercati.css') }}">
+{% endblock %}
+
+{% block script %}
+  <script src="https://kit.fontawesome.com/9f6b895217.js" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='script/mercati.js')}}" defer></script>
+{% endblock %}
+
+{% block content %}
+  <article class="mercati">
+    <h1>Mercati</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Nome</th>
+          <th scope="col">Giorno</th>
+          <th scope="col">Attuale</th>
+          <th scope="col">Evento</th>
+          <th scope="col">Modifica</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for mercato in mercati %}
+          <tr>
+            <td>
+              {{ mercato.nome }}
+            </td>
+            <td>
+              {{ mercato.giorno }}
+            </td>
+            <td>
+              {% if mercato.is_attuale == None %}
+
+              {% elif mercato.is_attuale %}
+                <!-- tick verde -->
+                <span class="green">&#x2714;</span> 
+              {% else %}
+                <!-- croce rossa -->
+                <span class="red">&#x2716;</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if mercato.is_evento %}
+                <!-- tick verde -->
+                <span class="green">&#x2714;</span>
+              {% endif %}
+            </td>
+            <td>
+              <!-- Icona modifica FontAwesome -->
+              <i class="fa-regular fa-pen-to-square"></i>
+            </td>
+          </tr>
+          {% endfor %}
+
+          <tr class="form-row">
+            <form action="{{ url_for('mercati.visualizza') }}" method="post">
+              <td>
+                <input type="text" name="nome" required>
+              </td>
+              <td>
+                <select name="giorno" required>
+                  <option>Lunedì</option>
+                  <option>Martedì</option>
+                  <option>Mercoledì</option>
+                  <option>Giovedì</option>
+                  <option>Venerdì</option>
+                  <option>Sabato</option>
+                  <option>Domenica</option>
+                </select>
+              </td>
+              <td>
+                <input type="checkbox" name="is_attuale">
+              </td>
+              <td>
+                <input type="checkbox" name="is_evento">
+              </td>
+              <td>
+                <button class="add-btn" type="submit">+</button>
+              </td>
+            </form>
+          </tr>
+
+          <tr id="add-row">
+            <td>
+              <span class="pointer" id="add-anchor"><span class="add">+</span> Aggiungi nuovo mercato</span>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+  </article>
+{% endblock %}

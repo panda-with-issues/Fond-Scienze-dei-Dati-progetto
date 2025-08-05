@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, request
 from app.auth import login_required, admin_required
-from . import database, auth, corr
+from . import database, auth, corr, mercati
 
 def create_app():
   # create and configure the app
@@ -19,6 +19,7 @@ def create_app():
 
   app.register_blueprint(auth.bp)
   app.register_blueprint(corr.bp)
+  app.register_blueprint(mercati.bp)
   
   @app.route('/')
   @login_required
