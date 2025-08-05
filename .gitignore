@@ -3,6 +3,7 @@ Untitled*
 .*
 imgs/presentazione/resources
 *.R
+riccardo.ipynb
 
 instance/*sqlite
 app/__pycache__
