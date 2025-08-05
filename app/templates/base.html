@@ -22,6 +22,11 @@
   {% if g.user %}
     <nav class="global-logout">
       <span>{{ g.user.username }}</span>
+
+      {% if g.user.is_admin %}
+        <a href="{{ url_for('index') }}" class="global-btn">Menù</a>
+      {% endif %}
+      
       <a href="{{ url_for('auth.logout') }}" class="global-btn">Logout</a>
     </nav>
   {% endif %}
