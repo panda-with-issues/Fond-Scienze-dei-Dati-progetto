@@ -2,14 +2,12 @@ from flask import (
     Blueprint, render_template, request, flash, g, session, redirect, url_for
 )
 from sqlalchemy import or_, exc
-from sqlalchemy.inspection import inspect
 from app.database import db, Mercati, Corrispettivi
 import datetime
 import re
 import decimal
 
 from app.auth import login_required
-from app.database import db
 
 bp = Blueprint('corr', __name__, url_prefix='/corr')
 
