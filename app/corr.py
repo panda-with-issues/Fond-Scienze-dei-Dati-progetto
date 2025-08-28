@@ -147,6 +147,9 @@ def validate_input(req, mercati):
   if somma != totale:
     return 'La somma dei reparti non coincide col totale', corrispettivo
 
+  # resta da controllare se esiste già uno scontrino con i cinque reparti uguali e dare un warning
+  # perché potrebbe trattarsi di un duplicato
+
   return None, corrispettivo
 
 @bp.route('inserisci/success')

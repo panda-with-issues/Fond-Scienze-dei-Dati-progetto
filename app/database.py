@@ -74,7 +74,8 @@ class Corrispettivi(db.Model):
       ['inserito_da'], ['Utenti.username']
     ),
     ForeignKeyConstraint(
-      ['mercato', 'giorno_mercato'], ['Mercati.nome', 'Mercati.giorno']
+      ['mercato', 'giorno_mercato'], ['Mercati.nome', 'Mercati.giorno'],
+      onupdate='CASCADE'
     ),
     CheckConstraint(
       'data <= ts',

@@ -16,7 +16,7 @@
   }
 
   table {
-    margin-top: 2em;
+    margin: 2em 0;
   }
 
   td:nth-last-child(-n+3):not(:first-child) {
@@ -36,21 +36,26 @@
     padding: .2em .3em;
   }
 
-  .form-row {
-    display: none;
-  }
-
   .add-btn {
     font-weight: bold;
-    color: #fff;
+    font-size: 1em;
     color: #fff;
     background-color: var(--color-title);
     border-radius: 5px;
-    padding: .3em .6em;
+    padding: .2em .4em;
     border: none;
   }
 
   .add-btn:hover {
     cursor: pointer;
+  }
+
+  .abort-btn {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: #fff;
+    background-color: red;
+    border-radius: 5px;
+    padding: .2em .45em;
   }
 }

@@ -8,12 +8,16 @@
 
 {% block script %}
   <script src="https://kit.fontawesome.com/9f6b895217.js" crossorigin="anonymous"></script>
-  <script src="{{ url_for('static', filename='script/mercati.js')}}" defer></script>
+  <!-- <script src="{{ url_for('static', filename='script/mercati.js')}}" defer></script> -->
 {% endblock %}
 
 {% block content %}
   <article class="mercati">
     <h1>Mercati</h1>
+
+    {% if session['add_mode'] or session['edit_id'] %}
+    <form action="{{ url_for('mercati.visualizza') }}" method="post" id="add-form"></form>
+    {% endif %}
 
     <table>
       <thead>
@@ -28,71 +32,115 @@
 
       <tbody>
         {% for mercato in mercati %}
+          <!-- Riga se siamo in edit mode -->
           <tr>
-            <td>
-              {{ mercato.nome }}
-            </td>
-            <td>
-              {{ mercato.giorno }}
-            </td>
-            <td>
-              {% if mercato.is_attuale == None %}
-
-              {% elif mercato.is_attuale %}
-                <!-- tick verde -->
-                <span class="green">&#x2714;</span> 
-              {% else %}
-                <!-- croce rossa -->
-                <span class="red">&#x2716;</span>
-              {% endif %}
-            </td>
-            <td>
-              {% if mercato.is_evento %}
-                <!-- tick verde -->
-                <span class="green">&#x2714;</span>
-              {% endif %}
-            </td>
-            <td>
-              <!-- Icona modifica FontAwesome -->
-              <i class="fa-regular fa-pen-to-square"></i>
-            </td>
-          </tr>
-          {% endfor %}
-
-          <tr class="form-row">
-            <form action="{{ url_for('mercati.visualizza') }}" method="post">
+            {% if session['edit_id'] and mercato.nome == session['edit_id'][0] and mercato.giorno == session['edit_id'][1] %}
               <td>
-                <input type="text" name="nome" required>
+                <input type="text" name="nome" value="{{ mercato.nome }}" form="add-form" required>
               </td>
               <td>
-                <select name="giorno" required>
-                  <option>Lunedì</option>
-                  <option>Martedì</option>
-                  <option>Mercoledì</option>
-                  <option>Giovedì</option>
-                  <option>Venerdì</option>
-                  <option>Sabato</option>
-                  <option>Domenica</option>
+                <select name="giorno" form="add-form" required>
+                  {% for giorno in [ 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato', 'Domenica' ] %}
+                    <option
+                      {% if mercato.giorno == giorno %}
+                        selected
+                      {% endif %}
+                    >
+                      {{ giorno }}
+                    </option>
+                  {% endfor %}
                 </select>
               </td>
               <td>
-                <input type="checkbox" name="is_attuale">
+                <input type="checkbox" name="is_attuale" value="True" form="add-form" {% if mercato.is_attuale %} checked {% endif %}>
               </td>
               <td>
-                <input type="checkbox" name="is_evento">
+                <input type="checkbox" name="is_evento" value="True" form="add-form" {% if mercato.is_evento %} checked {% endif %}>
               </td>
               <td>
-                <button class="add-btn" type="submit">+</button>
+                <button class="add-btn" type="submit" form="add-form">+</button>
+                <!-- croce rossa -->
+                <a href="{{ url_for('mercati.edit_mode', nome=1, giorno=1) }}" class="abort-btn">&times;</a>
               </td>
-            </form>
-          </tr>
 
-          <tr id="add-row">
+            {% else %}
+            <!-- riga di tabella normale -->
+              <td>
+                {{ mercato.nome }}
+              </td>
+              <td>
+                {{ mercato.giorno }}
+              </td>
+              <td>
+                {% if mercato.is_attuale == None %}
+                {% elif mercato.is_attuale %}
+                  <!-- tick verde -->
+                  <span class="green">&#x2714;</span>
+                {% else %}
+                  <!-- croce rossa -->
+                  <span class="red">&#x2716;</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if mercato.is_evento %}
+                  <!-- tick verde -->
+                  <span class="green">&#x2714;</span>
+                {% endif %}
+              </td>
+              <td>
+                <!-- Icona modifica FontAwesome -->
+                <a href="{{ url_for('mercati.edit_mode', nome=mercato.nome, giorno=mercato.giorno) }}">
+                  <i class="fa-regular fa-pen-to-square"></i>
+                </a>
+              </td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+
+        {% if session['add_mode'] %}
+        <!-- Riga di inserimento nuovo mercato -->
+          <tr>
             <td>
-              <span class="pointer" id="add-anchor"><span class="add">+</span> Aggiungi nuovo mercato</span>
+              <input type="text" name="nome" value="{{ session['nome'] }}" form="add-form" required>
+            </td>
+            <td>
+              <select name="giorno" form="add-form" required>
+                {% for giorno in [ 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato', 'Domenica' ] %}
+                  <option
+                    {% if session['giorno'] == giorno %}
+                      selected
+                    {% endif %}
+                  >
+                    {{ giorno }}
+                  </option>
+                {% endfor %}
+              </select>
+            </td>
+            <td>
+              <input type="checkbox" name="is_attuale" value="True" form="add-form" {% if session['is_attuale'] %} checked {% endif %}>
+            </td>
+            <td>
+              <input type="checkbox" name="is_evento" value="True" form="add-form" {% if session['is_evento'] %} checked {% endif %}>
+            </td>
+            <td>
+              <button class="add-btn" type="submit" form="add-form">+</button>
+              <!-- croce rossa -->
+              <a href="{{ url_for('mercati.add_mode') }}" class="abort-btn">&times;</a>
             </td>
           </tr>
+
+        {% else %}
+          <tr>
+            <td>
+              <a href="{{ url_for('mercati.add_mode') }}"><span class="add">+</span> Aggiungi nuovo mercato</a>
+            </td>
+          </tr>
+        {% endif %}
       </tbody>
     </table>
+
+    {% for message in get_flashed_messages() %}
+      <span class="global-error text-medium">{{ message }}</span>
+    {% endfor %}
   </article>
 {% endblock %}
