@@ -6,6 +6,8 @@ Il notebook `analisi_corrispettivi_la_di_cjastelan.ipynb ` contiene uno scritto 
 
 Nel notebook `lista_correzioni_web_df.ipynb` ho registrato tutte le correzioni fatte nel dataset, per futura consultazione.
 
+I file del dataset non sono presenti e saranno portati il giorno dell'esame.
+
 # Integrazione di 3 CFU
 I file riguardanti la web-app sviluppata per l'integrazione sono quasi tutti nella cartella `app`. La cartella `instance` contiene il file di configurazione e conterrà il file SQLite dopo la prima esecuzione.
 Per avviare l'app basta eseguire `flask run --debug` dalla root directory del repository. Occorrerà installare le dipendenze che *dovrebbero* essere: `flask`, `flask-sqlalchemy`, `sqlalchemy`.
