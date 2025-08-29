@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, flash, redirect, render_template, request, session, url_for, abort
+    Blueprint, flash, redirect, render_template, request, session, url_for
 )
 from app.database import db, Mercati
 from app.auth import login_required, admin_required
@@ -42,6 +42,7 @@ def visualizza():
           db.session.commit()
           return redirect(url_for('mercati.edit_mode', nome=1, giorno=1))
         
+        # stiamo aggiungendo un nuovo mercato
         db.session.add(validated)
         db.session.commit()
         return redirect(url_for('mercati.add_mode'))
@@ -50,6 +51,10 @@ def visualizza():
         db.session.rollback()
         if 'UNIQUE' in e._message():
           error = f'Esiste già il mercato "{validated.nome}" che si tiene il {validated.giorno.lower()}'
+      
+      except exc.SQLAlchemyError as e:
+        db.session.rollback()
+        error = str(e)
     
     flash(error)
     

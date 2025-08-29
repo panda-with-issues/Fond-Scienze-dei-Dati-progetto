@@ -28,11 +28,6 @@ def inserisci():
     
     error, corrispettivo = validate_input(request, mercati_nomi)
 
-    # controlliamo che la data inserita corrisponda al giorno del mercato inserito
-    weekdays = [ 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato', 'Domenica' ]
-    if (weekdays[corrispettivo.data.weekday()] != corrispettivo.giorno_mercato):
-      error = f'Il {corrispettivo.data} non era {corrispettivo.giorno_mercato.lower()}'
-
     if error is None:
       cassa_sballata = False
 
@@ -92,15 +87,21 @@ def validate_input(req, mercati):
 
   # mercati
   mercato = request.form['mercato']
+
   if mercato not in mercati:
     return 'Mercato non valido', corrispettivo
   corrispettivo.mercato = mercato
 
   # giorno_mercato
   giorno_mercato = request.form['giorno_mercato']
-  if giorno_mercato not in ['Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato', 'Domenica']:
+  weekdays = [ 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato', 'Domenica' ]
+  if giorno_mercato not in weekdays:
     return 'Giorno della settimana non valido', corrispettivo
   corrispettivo.giorno_mercato = giorno_mercato
+
+  # controlliamo che la data inserita corrisponda al giorno del mercato inserito
+  if (weekdays[corrispettivo.data.weekday()] != corrispettivo.giorno_mercato):
+    return f'Il {datetime.datetime.strftime(corrispettivo.data, "%d-%m-%y")} non era {corrispettivo.giorno_mercato.lower()}', corrispettivo
   
   # controlliamo che il mercato sia attuale. Dovrebbe essere già garantito dalla query su `mercati`
   mercato = db.session.scalar(db.select(Mercati).where(Mercati.nome == mercato and Mercati.giorno == giorno_mercato))
