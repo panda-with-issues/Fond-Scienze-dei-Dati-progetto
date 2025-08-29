@@ -15,6 +15,14 @@ def visualizza():
   # se invece lo materializziamo subito castandolo, non dà problemi
   mercati = list(db.session.scalars(db.select(Mercati).order_by(Mercati.nome)))
 
+  new_nome = None
+  new_giorno = None
+  inserted = session.get('inserted')
+  if inserted:
+    new_nome = inserted[0]
+    new_giorno = inserted[1]
+    session.pop('inserted')
+
   if request.method == 'POST':
     user = session['username']
     mode = session.get('add_mode')
@@ -45,6 +53,7 @@ def visualizza():
         # stiamo aggiungendo un nuovo mercato
         db.session.add(validated)
         db.session.commit()
+        session['inserted'] = (validated.nome, validated.giorno)
         return redirect(url_for('mercati.add_mode'))
 
       except exc.IntegrityError as e:
@@ -58,7 +67,7 @@ def visualizza():
     
     flash(error)
     
-  return render_template('mercati.html', mercati=mercati)
+  return render_template('mercati.html', mercati=mercati, new_nome=new_nome, new_giorno=new_giorno)
 
 @login_required
 @admin_required
@@ -70,8 +79,11 @@ def add_mode():
   add_mode = session.get('add_mode')
   if add_mode:
     user = session['username']
+    inserted = session.get('inserted')
     session.clear()
     session['username'] = user
+    if inserted:
+      session['inserted'] = inserted
   else:
     session['add_mode'] = True
   return redirect(url_for('mercati.visualizza'))

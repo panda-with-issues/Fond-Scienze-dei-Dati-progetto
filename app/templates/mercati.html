@@ -8,7 +8,6 @@
 
 {% block script %}
   <script src="https://kit.fontawesome.com/9f6b895217.js" crossorigin="anonymous"></script>
-  <!-- <script src="{{ url_for('static', filename='script/mercati.js')}}" defer></script> -->
 {% endblock %}
 
 {% block content %}
@@ -33,8 +32,8 @@
       <tbody>
         {% for mercato in mercati %}
           <!-- Riga se siamo in edit mode -->
-          <tr>
-            {% if session['edit_id'] and mercato.nome == session['edit_id'][0] and mercato.giorno == session['edit_id'][1] %}
+          {% if session['edit_id'] and mercato.nome == session['edit_id'][0] and mercato.giorno == session['edit_id'][1] %}
+            <tr>
               <td>
                 <input type="text" name="nome" value="{{ mercato.nome }}" form="add-form" required>
               </td>
@@ -62,9 +61,14 @@
                 <!-- croce rossa -->
                 <a href="{{ url_for('mercati.edit_mode', nome=1, giorno=1) }}" class="abort-btn">&times;</a>
               </td>
-
-            {% else %}
-            <!-- riga di tabella normale -->
+            </tr>
+          {% else %}
+          <!-- riga di tabella normale -->
+            <tr 
+              {% if mercato.nome == new_nome and mercato.giorno == new_giorno %}
+                class="highlight"
+              {% endif %}
+            >
               <td>
                 {{ mercato.nome }}
               </td>
@@ -93,8 +97,8 @@
                   <i class="fa-regular fa-pen-to-square"></i>
                 </a>
               </td>
-            {% endif %}
-          </tr>
+            </tr>
+          {% endif %}
         {% endfor %}
 
         {% if session['add_mode'] %}
